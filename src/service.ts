@@ -342,9 +342,7 @@ export const teamspeakService = {
         try {
           voiceBuffer.push(data);
         } catch (err) {
-          logger.warn(
-            `voice data error: ${err instanceof Error ? err.message : String(err)}`,
-          );
+          logger.warn(`voice data error: ${err instanceof Error ? err.message : String(err)}`);
           manager.recordVoiceError();
         }
       });
@@ -362,6 +360,7 @@ export const teamspeakService = {
       activeVoiceBuffer.destroy();
       activeVoiceBuffer = null;
     }
+    speakerCache.clear();
     if (activeManager) {
       await activeManager.stop();
       activeManager = null;
