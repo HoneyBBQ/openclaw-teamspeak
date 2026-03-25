@@ -1,0 +1,101 @@
+{
+  "id": "openclaw-teamspeak",
+  "kind": "channel",
+  "channels": ["teamspeak"],
+  "name": "TeamSpeak",
+  "description": "Connect OpenClaw to TeamSpeak 3 servers via text chat",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "teamspeak": {
+        "type": "object",
+        "properties": {
+          "server": {
+            "type": "string",
+            "description": "TeamSpeak server address (host or host:port, default port 9987)"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "Bot nickname on the TeamSpeak server"
+          },
+          "identity": {
+            "type": "string",
+            "description": "TS3 identity string (omit to auto-generate and persist)"
+          },
+          "identityLevel": {
+            "type": "number",
+            "description": "Security level for auto-generated identities (default 8)"
+          },
+          "dmPolicy": {
+            "type": "string",
+            "enum": ["pairing", "allowlist", "open", "disabled"],
+            "description": "DM access policy"
+          },
+          "allowFrom": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "TS3 UIDs allowed to DM the bot"
+          },
+          "groupPolicy": {
+            "type": "string",
+            "enum": ["open", "disabled", "allowlist"],
+            "description": "Channel message policy"
+          },
+          "groupAllowFrom": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "TS3 UIDs allowed to trigger the bot in channels"
+          },
+          "mentionPatterns": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Regex patterns for mention detection in channel messages"
+          },
+          "groups": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "requireMention": { "type": "boolean" },
+                "enabled": { "type": "boolean" }
+              }
+            },
+            "description": "Per-channel overrides keyed by TS3 channel ID (use '*' for defaults)"
+          },
+          "tts": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Enable TTS voice playback of replies into the bot's TS3 channel (default false)"
+              },
+              "replyMode": {
+                "type": "string",
+                "enum": ["voice", "text", "both"],
+                "description": "How to deliver replies: voice only, text only, or both (default both)"
+              }
+            }
+          },
+          "stt": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Enable speech-to-text: transcribe voice from TS3 users and process as text messages (default false)"
+              },
+              "silenceTimeoutMs": {
+                "type": "number",
+                "description": "Milliseconds of silence before a voice segment is considered complete (default 300)"
+              },
+              "minDurationMs": {
+                "type": "number",
+                "description": "Minimum voice segment duration in ms; shorter segments are discarded (default 500)"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
