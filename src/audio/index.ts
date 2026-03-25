@@ -11,6 +11,18 @@ export { PlaybackQueue } from "./playback.js";
 const globalQueue = new PlaybackQueue();
 
 /**
+ * Interrupt any TTS playback currently in progress (barge-in).
+ * Call this when a user starts speaking to stop the bot mid-sentence.
+ */
+export function interruptPlayback(): void {
+  globalQueue.interrupt();
+}
+
+export function isPlaybackActive(): boolean {
+  return globalQueue.isPlaying;
+}
+
+/**
  * Convert TTS audio output to TS3 voice and play it in the bot's current channel.
  * Playback is serialized through a global queue — concurrent calls wait in line.
  *

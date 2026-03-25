@@ -6,15 +6,39 @@ const FRAME_INTERVAL_MS = 20;
 /**
  * Serialized playback queue — ensures only one voice stream plays at a time.
  * Subsequent calls wait until the previous playback finishes.
+ * Supports barge-in: calling `interrupt()` aborts the current playback.
  */
 export class PlaybackQueue {
   #tail: Promise<void> = Promise.resolve();
+  #currentAbort: AbortController | null = null;
 
   play(client: Client, frames: Uint8Array[], signal?: AbortSignal): Promise<void> {
+    const abort = new AbortController();
+    if (signal) {
+      signal.addEventListener("abort", () => abort.abort(), { once: true });
+    }
+    this.#currentAbort = abort;
+
     const prev = this.#tail;
-    const next = prev.then(() => playOpusFramesInternal(client, frames, signal));
-    this.#tail = next.catch(() => {});
+    const next = prev.then(() => {
+      if (abort.signal.aborted) return;
+      return playOpusFramesInternal(client, frames, abort.signal);
+    });
+    this.#tail = next
+      .catch(() => {})
+      .finally(() => {
+        if (this.#currentAbort === abort) this.#currentAbort = null;
+      });
     return next;
+  }
+
+  interrupt(): void {
+    this.#currentAbort?.abort();
+    this.#currentAbort = null;
+  }
+
+  get isPlaying(): boolean {
+    return this.#currentAbort !== null;
   }
 }
 

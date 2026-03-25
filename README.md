@@ -14,8 +14,8 @@
 
 ## Gallery
 
-|                   TeamSpeak Client                   |                   OpenClaw Plugin                    |
-| :--------------------------------------------------: | :--------------------------------------------------: |
+|                                                    TeamSpeak Client                                                     |                                                     OpenClaw Plugin                                                     |
+| :---------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
 | ![TeamSpeak demo](https://raw.githubusercontent.com/HoneyBBQ/openclaw-teamspeak/main/.github/images/teamspeak-demo.png) | ![Plugin running](https://raw.githubusercontent.com/HoneyBBQ/openclaw-teamspeak/main/.github/images/plugin-running.png) |
 
 ## Features

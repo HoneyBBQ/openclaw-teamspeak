@@ -4,7 +4,7 @@ import { toInboundMessage, chatTypeFromTargetMode } from "./inbound.js";
 import { getRuntime } from "./runtime.js";
 import type { PluginLogger, TeamspeakInboundMessage } from "./types.js";
 import { dispatchInboundReplyWithBase } from "openclaw/plugin-sdk/irc";
-import { ttsToVoice } from "./audio/index.js";
+import { ttsToVoice, interruptPlayback, isPlaybackActive } from "./audio/index.js";
 import { VoiceBuffer, type VoiceSegment } from "./audio/voice-buffer.js";
 import { writeOggOpus } from "./audio/ogg-writer.js";
 import { getClientInfo } from "@honeybbq/teamspeak-client";
@@ -15,6 +15,51 @@ let activeVoiceBuffer: VoiceBuffer | null = null;
 export function getClientManager(): TeamspeakClientManager | null {
   return activeManager;
 }
+
+// --- Speaker identity cache (avoids repeated getClientInfo calls) ---
+
+const SPEAKER_CACHE_TTL_MS = 60_000;
+
+type SpeakerInfo = { nick: string; uid: string; expiresAt: number };
+const speakerCache = new Map<number, SpeakerInfo>();
+
+async function resolveSpeaker(
+  clientId: number,
+  logger: PluginLogger,
+): Promise<{ nick: string; uid: string }> {
+  const cached = speakerCache.get(clientId);
+  if (cached && cached.expiresAt > Date.now()) {
+    return { nick: cached.nick, uid: cached.uid };
+  }
+
+  const manager = getClientManager();
+  let nick = `clid-${clientId}`;
+  let uid = `clid-${clientId}`;
+
+  if (manager?.client) {
+    try {
+      const info = await getClientInfo(manager.client, clientId);
+      nick = info["client_nickname"] ?? nick;
+      uid = info["client_unique_identifier"] ?? uid;
+    } catch {
+      logger.warn(`could not resolve client info for clid=${clientId}`);
+    }
+  }
+
+  speakerCache.set(clientId, { nick, uid, expiresAt: Date.now() + SPEAKER_CACHE_TTL_MS });
+  return { nick, uid };
+}
+
+// --- Processing queue (serializes STT work, independent from playback) ---
+
+let processingTail: Promise<void> = Promise.resolve();
+
+function enqueueProcessing(fn: () => Promise<void>): void {
+  const prev = processingTail;
+  processingTail = prev.then(fn, fn);
+}
+
+// --- Voice segment handler ---
 
 async function handleVoiceSegment(params: {
   segment: VoiceSegment;
@@ -27,18 +72,10 @@ async function handleVoiceSegment(params: {
   const manager = getClientManager();
   if (!manager?.client) return;
 
-  let senderNick = `clid-${segment.clientId}`;
-  let senderUid = `clid-${segment.clientId}`;
-  try {
-    const info = await getClientInfo(manager.client, segment.clientId);
-    senderNick = info["client_nickname"] ?? senderNick;
-    senderUid = info["client_unique_identifier"] ?? senderUid;
-  } catch {
-    logger.warn(`could not resolve client info for clid=${segment.clientId}`);
-  }
+  const speaker = await resolveSpeaker(segment.clientId, logger);
 
   logger.info(
-    `voice segment from "${senderNick}" (${segment.durationMs}ms, ${segment.frames.length} frames)`,
+    `voice segment from "${speaker.nick}" (${segment.durationMs}ms, ${segment.frames.length} frames)`,
   );
 
   const oggBuffer = writeOggOpus(segment.frames, 1);
@@ -61,7 +98,6 @@ async function handleVoiceSegment(params: {
       mime: "audio/ogg",
     });
 
-    // Keep file for debugging if transcript is empty
     if (result.text?.trim()) {
       const { unlink } = await import("node:fs/promises");
       await unlink(filePath).catch(() => {});
@@ -69,17 +105,17 @@ async function handleVoiceSegment(params: {
 
     const text = result.text?.trim();
     if (!text) {
-      logger.info(`STT returned empty transcript for ${senderNick}, skipping`);
+      logger.info(`STT returned empty transcript for ${speaker.nick}, skipping`);
       return;
     }
 
-    logger.info(`STT from "${senderNick}": ${text.slice(0, 80)}`);
+    logger.info(`STT from "${speaker.nick}": ${text.slice(0, 80)}`);
 
     const inbound: TeamspeakInboundMessage = {
       messageId: `ts3-stt-${Date.now()}`,
-      target: senderUid,
-      senderNick,
-      senderUid,
+      target: speaker.uid,
+      senderNick: speaker.nick,
+      senderUid: speaker.uid,
       senderClid: segment.clientId,
       text,
       timestamp: segment.startedAt,
@@ -282,22 +318,35 @@ export const teamspeakService = {
         silenceTimeoutMs: account.stt.silenceTimeoutMs,
         minDurationMs: account.stt.minDurationMs,
         onSegment: (segment) => {
-          handleVoiceSegment({
-            segment,
-            config: ctx.config,
-            logger,
-            stateDir: ctx.stateDir,
-          }).catch((err) => {
-            logger.error(
-              `voice segment handling failed: ${err instanceof Error ? err.message : String(err)}`,
-            );
-          });
+          enqueueProcessing(() =>
+            handleVoiceSegment({
+              segment,
+              config: ctx.config,
+              logger,
+              stateDir: ctx.stateDir,
+            }).catch((err) => {
+              logger.error(
+                `voice segment handling failed: ${err instanceof Error ? err.message : String(err)}`,
+              );
+            }),
+          );
         },
       });
       activeVoiceBuffer = voiceBuffer;
 
       manager.onVoiceData((data) => {
-        voiceBuffer.push(data);
+        if (data.data.length > 0 && isPlaybackActive()) {
+          logger.info("barge-in: user speaking, interrupting TTS playback");
+          interruptPlayback();
+        }
+        try {
+          voiceBuffer.push(data);
+        } catch (err) {
+          logger.warn(
+            `voice data error: ${err instanceof Error ? err.message : String(err)}`,
+          );
+          manager.recordVoiceError();
+        }
       });
 
       logger.info(

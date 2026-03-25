@@ -15,6 +15,9 @@ const RECONNECT_BASE_MS = 2_000;
 const RECONNECT_MAX_MS = 60_000;
 const IDENTITY_FILENAME = "identity.txt";
 
+const VOICE_ERROR_WINDOW_MS = 30_000;
+const VOICE_ERROR_RECONNECT_THRESHOLD = 5;
+
 export class TeamspeakClientManager {
   #client: Client | null = null;
   #account: ResolvedTeamspeakAccount;
@@ -26,6 +29,9 @@ export class TeamspeakClientManager {
   #reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   #onMessage: ((msg: TextMessage) => void) | null = null;
   #onVoiceData: ((data: VoiceData) => void) | null = null;
+  #voiceErrorCount = 0;
+  #voiceErrorWindowStart = 0;
+  #voiceRecoveryInFlight = false;
 
   constructor(account: ResolvedTeamspeakAccount, logger: PluginLogger, stateDir: string) {
     this.#account = account;
@@ -177,6 +183,40 @@ export class TeamspeakClientManager {
       this.#logger.error(`connection failed: ${err instanceof Error ? err.message : String(err)}`);
       this.#scheduleReconnect();
     }
+  }
+
+  /**
+   * Track voice/transport errors and trigger reconnect if they
+   * exceed the threshold within the sliding window.
+   */
+  recordVoiceError(): void {
+    const now = Date.now();
+    if (now - this.#voiceErrorWindowStart > VOICE_ERROR_WINDOW_MS) {
+      this.#voiceErrorCount = 0;
+      this.#voiceErrorWindowStart = now;
+    }
+    this.#voiceErrorCount++;
+
+    if (this.#voiceErrorCount < VOICE_ERROR_RECONNECT_THRESHOLD || this.#voiceRecoveryInFlight) {
+      return;
+    }
+
+    this.#voiceRecoveryInFlight = true;
+    this.#voiceErrorCount = 0;
+    this.#logger.warn(
+      `${VOICE_ERROR_RECONNECT_THRESHOLD} voice errors in ${VOICE_ERROR_WINDOW_MS}ms, reconnecting`,
+    );
+
+    this.stop()
+      .then(() => this.start())
+      .catch((err) => {
+        this.#logger.error(
+          `voice error recovery failed: ${err instanceof Error ? err.message : String(err)}`,
+        );
+      })
+      .finally(() => {
+        this.#voiceRecoveryInFlight = false;
+      });
   }
 
   #scheduleReconnect(): void {
