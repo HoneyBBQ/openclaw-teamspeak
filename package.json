@@ -1,7 +1,7 @@
 {
   "name": "@honeybbq/openclaw-teamspeak",
   "version": "0.1.0",
-  "description": "OpenClaw channel plugin for TeamSpeak 3 — text chat via the native TS3 client protocol",
+  "description": "OpenClaw channel plugin for TeamSpeak — text & voice chat via the native client protocol. Compatible with TS 3, 5 & 6.",
   "license": "MIT",
   "author": "honeybbq",
   "repository": {
@@ -49,7 +49,7 @@
     "channel": {
       "id": "teamspeak",
       "label": "TeamSpeak",
-      "blurb": "Connect OpenClaw to TeamSpeak 3 servers via text chat."
+      "blurb": "Connect OpenClaw to TeamSpeak servers via text & voice chat. Compatible with TS 3, 5 & 6."
     }
   }
 }

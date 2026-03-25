@@ -12,7 +12,8 @@ const base: Base = {
     label: "TeamSpeak",
     selectionLabel: "TeamSpeak",
     docsPath: "/channels/teamspeak",
-    blurb: "Connect OpenClaw to TeamSpeak 3 servers via text chat.",
+    blurb:
+      "Connect OpenClaw to TeamSpeak servers via text & voice chat. Compatible with TS 3, 5 & 6.",
   },
 
   capabilities: {

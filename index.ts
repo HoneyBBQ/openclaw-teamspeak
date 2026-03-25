@@ -6,7 +6,8 @@ import { setRuntime } from "./src/runtime.js";
 export default defineChannelPluginEntry({
   id: "openclaw-teamspeak",
   name: "TeamSpeak",
-  description: "Connect OpenClaw to TeamSpeak 3 servers via text chat",
+  description:
+    "Connect OpenClaw to TeamSpeak servers via text & voice chat. Compatible with TS 3, 5 & 6.",
   plugin: teamspeakPlugin,
   setRuntime,
 
