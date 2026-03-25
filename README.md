@@ -16,7 +16,7 @@
 
 |                   TeamSpeak Client                   |                   OpenClaw Plugin                    |
 | :--------------------------------------------------: | :--------------------------------------------------: |
-| ![TeamSpeak demo](.github/images/teamspeak-demo.png) | ![Plugin running](.github/images/plugin-running.png) |
+| ![TeamSpeak demo](https://raw.githubusercontent.com/HoneyBBQ/openclaw-teamspeak/main/.github/images/teamspeak-demo.png) | ![Plugin running](https://raw.githubusercontent.com/HoneyBBQ/openclaw-teamspeak/main/.github/images/plugin-running.png) |
 
 ## Features
 
@@ -54,14 +54,9 @@ See [`openclaw.plugin.json`](openclaw.plugin.json) for the full config schema.
 
 ## Roadmap
 
-- **ServerQuery integration** — Connect via TS3 ServerQuery to give OpenClaw full server administration capabilities: manage channels, kick/ban users, assign server groups, and view server stats — all through natural language
-- **Multi-server support** — Connect to multiple TeamSpeak servers simultaneously from a single OpenClaw instance
-- **Permission-aware tools** — Expose TS3 permissions as OpenClaw tools so the agent can reason about who can do what before acting
-- **Channel auto-provisioning** — Let OpenClaw create and manage temporary channels on demand (e.g. for meetings, events)
-- **File sharing bridge** — Bidirectional file transfers between OpenClaw conversations and TS3 file browser
-- **Presence & status sync** — Reflect OpenClaw agent availability as TS3 client status (away, idle, active)
-- **Whisper lists** — Target voice messages to specific users or groups without switching channels
-- **Event webhooks** — Forward TS3 server events (user joins, channel edits, complaints) to OpenClaw for automated responses
+- [ ] **ServerQuery integration** — Give OpenClaw full server admin capabilities via TS3 ServerQuery: manage channels, kick/ban users, assign server groups, view stats — all through natural language
+- [ ] **File transfers** — Bidirectional file sharing between OpenClaw conversations and the TS3 file browser
+- [ ] **Multi-server support** — Connect to multiple TeamSpeak servers simultaneously from a single OpenClaw instance
 
 ## Related
 
