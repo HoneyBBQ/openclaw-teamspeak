@@ -29,8 +29,8 @@
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
-    "openclaw": "2026.3.23-2",
-    "oxfmt": "^0.42.0",
+    "openclaw": "2026.3.31",
+    "oxfmt": "^0.43.0",
     "oxlint": "^1.57.0",
     "typescript": "^6.0.2"
   },
