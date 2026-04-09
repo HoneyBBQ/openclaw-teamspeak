@@ -12,8 +12,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       '@honeybbq/teamspeak-client':
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.1.1
+        version: 0.1.1
       '@sinclair/typebox':
         specifier: ^0.34.41
         version: 0.34.49
@@ -239,8 +239,8 @@ packages:
     resolution: {integrity: sha512-2F9N/15Q/GnoBXimr8PFg7fb1QrAQBvuZpaW2kseWOOy14Lzc3yZB1mT9N1Ju/4hlkboU33uHxtOxZkvkPoE/w==}
     hasBin: true
 
-  '@honeybbq/teamspeak-client@0.1.0':
-    resolution: {integrity: sha512-Gh/siE4a0NRxqEqiwbvYn6p4ulphG6IVZaTCuCUjS/+cD6rVvWNrCgbJ0724RdkEY5yndoQ34zkjE/Lglk1wTQ==}
+  '@honeybbq/teamspeak-client@0.1.1':
+    resolution: {integrity: sha512-tkGjIyLggyuzZUVz+BbHxtxV8wDIqYZeJ8IKt4jNDV2YHTDehy+As58OP3mesgRr3+KDTVTwW5SsbLVbBLuw6A==}
     engines: {node: '>=20.19'}
 
   '@hono/node-server@1.19.12':
@@ -2938,7 +2938,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@honeybbq/teamspeak-client@0.1.0':
+  '@honeybbq/teamspeak-client@0.1.1':
     dependencies:
       '@noble/curves': 2.0.1
 
