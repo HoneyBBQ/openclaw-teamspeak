@@ -1,6 +1,6 @@
 {
   "name": "@honeybbq/openclaw-teamspeak",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "OpenClaw channel plugin for TeamSpeak — text & voice chat via the native client protocol. Compatible with TS 3, 5 & 6.",
   "license": "MIT",
   "author": "honeybbq",
