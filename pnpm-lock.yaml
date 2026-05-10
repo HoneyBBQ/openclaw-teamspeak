@@ -25,7 +25,7 @@ importers:
         version: 1.7.3
       zod:
         specifier: ^4.3.6
-        version: 4.3.6
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: ^25.5.0
@@ -3171,6 +3171,7 @@ packages:
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   vary@1.1.2:
@@ -3288,30 +3289,30 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zod@4.3.6:
-    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
 
 snapshots:
 
-  '@agentclientprotocol/sdk@0.18.0(zod@4.3.6)':
+  '@agentclientprotocol/sdk@0.18.0(zod@4.4.3)':
     dependencies:
-      zod: 4.3.6
+      zod: 4.4.3
 
-  '@anthropic-ai/sdk@0.73.0(zod@4.3.6)':
+  '@anthropic-ai/sdk@0.73.0(zod@4.4.3)':
     dependencies:
       json-schema-to-ts: 3.1.1
     optionalDependencies:
-      zod: 4.3.6
+      zod: 4.4.3
 
-  '@anthropic-ai/sdk@0.87.0(zod@4.3.6)':
+  '@anthropic-ai/sdk@0.87.0(zod@4.4.3)':
     dependencies:
       json-schema-to-ts: 3.1.1
     optionalDependencies:
-      zod: 4.3.6
+      zod: 4.4.3
 
-  '@anthropic-ai/vertex-sdk@0.14.4(zod@4.3.6)':
+  '@anthropic-ai/vertex-sdk@0.14.4(zod@4.4.3)':
     dependencies:
-      '@anthropic-ai/sdk': 0.87.0(zod@4.3.6)
+      '@anthropic-ai/sdk': 0.87.0(zod@4.4.3)
       google-auth-library: 9.15.1
     transitivePeerDependencies:
       - encoding
@@ -3950,14 +3951,14 @@ snapshots:
 
   '@evan/opus@1.0.3': {}
 
-  '@google/genai@1.49.0(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))':
+  '@google/genai@1.49.0(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))':
     dependencies:
       google-auth-library: 10.6.2
       p-retry: 4.6.2
       protobufjs: 7.5.4
       ws: 8.20.0
     optionalDependencies:
-      '@modelcontextprotocol/sdk': 1.29.0(zod@4.3.6)
+      '@modelcontextprotocol/sdk': 1.29.0(zod@4.4.3)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -4448,9 +4449,9 @@ snapshots:
       std-env: 3.10.0
       yoctocolors: 2.1.2
 
-  '@mariozechner/pi-agent-core@0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)':
+  '@mariozechner/pi-agent-core@0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)':
     dependencies:
-      '@mariozechner/pi-ai': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)
+      '@mariozechner/pi-ai': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)
     transitivePeerDependencies:
       - '@modelcontextprotocol/sdk'
       - aws-crt
@@ -4460,21 +4461,21 @@ snapshots:
       - ws
       - zod
 
-  '@mariozechner/pi-ai@0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)':
+  '@mariozechner/pi-ai@0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)':
     dependencies:
-      '@anthropic-ai/sdk': 0.73.0(zod@4.3.6)
+      '@anthropic-ai/sdk': 0.73.0(zod@4.4.3)
       '@aws-sdk/client-bedrock-runtime': 3.1024.0
-      '@google/genai': 1.49.0(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))
+      '@google/genai': 1.49.0(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))
       '@mistralai/mistralai': 1.14.1
       '@sinclair/typebox': 0.34.49
       ajv: 8.18.0
       ajv-formats: 3.0.1(ajv@8.18.0)
       chalk: 5.6.2
-      openai: 6.26.0(ws@8.20.0)(zod@4.3.6)
+      openai: 6.26.0(ws@8.20.0)(zod@4.4.3)
       partial-json: 0.1.7
       proxy-agent: 6.5.0
       undici: 7.24.7
-      zod-to-json-schema: 3.25.2(zod@4.3.6)
+      zod-to-json-schema: 3.25.2(zod@4.4.3)
     transitivePeerDependencies:
       - '@modelcontextprotocol/sdk'
       - aws-crt
@@ -4484,11 +4485,11 @@ snapshots:
       - ws
       - zod
 
-  '@mariozechner/pi-coding-agent@0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)':
+  '@mariozechner/pi-coding-agent@0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)':
     dependencies:
       '@mariozechner/jiti': 2.6.5
-      '@mariozechner/pi-agent-core': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)
-      '@mariozechner/pi-ai': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)
+      '@mariozechner/pi-agent-core': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)
+      '@mariozechner/pi-ai': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)
       '@mariozechner/pi-tui': 0.65.2
       '@silvia-odwyer/photon-node': 0.3.4
       ajv: 8.18.0
@@ -4540,13 +4541,13 @@ snapshots:
   '@mistralai/mistralai@1.14.1':
     dependencies:
       ws: 8.20.0
-      zod: 4.3.6
-      zod-to-json-schema: 3.25.2(zod@4.3.6)
+      zod: 4.4.3
+      zod-to-json-schema: 3.25.2(zod@4.4.3)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@modelcontextprotocol/sdk@1.29.0(zod@4.3.6)':
+  '@modelcontextprotocol/sdk@1.29.0(zod@4.4.3)':
     dependencies:
       '@hono/node-server': 1.19.13(hono@4.12.12)
       ajv: 8.18.0
@@ -4563,8 +4564,8 @@ snapshots:
       json-schema-typed: 8.0.2
       pkce-challenge: 5.0.1
       raw-body: 3.0.2
-      zod: 4.3.6
-      zod-to-json-schema: 3.25.2(zod@4.3.6)
+      zod: 4.4.3
+      zod-to-json-schema: 3.25.2(zod@4.4.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -6457,27 +6458,27 @@ snapshots:
     dependencies:
       wrappy: 1.0.2
 
-  openai@6.26.0(ws@8.20.0)(zod@4.3.6):
+  openai@6.26.0(ws@8.20.0)(zod@4.4.3):
     optionalDependencies:
       ws: 8.20.0
-      zod: 4.3.6
+      zod: 4.4.3
 
-  openai@6.34.0(ws@8.20.0)(zod@4.3.6):
+  openai@6.34.0(ws@8.20.0)(zod@4.4.3):
     optionalDependencies:
       ws: 8.20.0
-      zod: 4.3.6
+      zod: 4.4.3
 
   openclaw@2026.4.9(@napi-rs/canvas@0.1.97)(@types/express@5.0.6)(apache-arrow@18.1.0)(typescript@6.0.2):
     dependencies:
-      '@agentclientprotocol/sdk': 0.18.0(zod@4.3.6)
-      '@anthropic-ai/vertex-sdk': 0.14.4(zod@4.3.6)
+      '@agentclientprotocol/sdk': 0.18.0(zod@4.4.3)
+      '@anthropic-ai/vertex-sdk': 0.14.4(zod@4.4.3)
       '@aws-sdk/client-bedrock': 3.1024.0
       '@aws-sdk/client-bedrock-runtime': 3.1024.0
       '@aws-sdk/credential-provider-node': 3.972.29
       '@aws/bedrock-token-generator': 1.1.0
       '@buape/carbon': 0.14.0(@discordjs/opus@0.10.0)(hono@4.12.12)(opusscript@0.1.1)
       '@clack/prompts': 1.2.0
-      '@google/genai': 1.49.0(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))
+      '@google/genai': 1.49.0(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))
       '@grammyjs/runner': 2.0.3(grammy@1.42.0)
       '@grammyjs/transformer-throttler': 1.2.1(grammy@1.42.0)
       '@homebridge/ciao': 1.3.6
@@ -6485,12 +6486,12 @@ snapshots:
       '@larksuiteoapi/node-sdk': 1.60.0
       '@line/bot-sdk': 11.0.0
       '@lydell/node-pty': 1.2.0-beta.10
-      '@mariozechner/pi-agent-core': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)
-      '@mariozechner/pi-ai': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)
-      '@mariozechner/pi-coding-agent': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.3.6))(ws@8.20.0)(zod@4.3.6)
+      '@mariozechner/pi-agent-core': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)
+      '@mariozechner/pi-ai': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)
+      '@mariozechner/pi-coding-agent': 0.65.2(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(ws@8.20.0)(zod@4.4.3)
       '@mariozechner/pi-tui': 0.65.2
       '@matrix-org/matrix-sdk-crypto-wasm': 18.0.0
-      '@modelcontextprotocol/sdk': 1.29.0(zod@4.3.6)
+      '@modelcontextprotocol/sdk': 1.29.0(zod@4.4.3)
       '@mozilla/readability': 0.6.0
       '@napi-rs/canvas': 0.1.97
       '@sinclair/typebox': 0.34.49
@@ -6523,7 +6524,7 @@ snapshots:
       mpg123-decoder: 1.0.3
       node-edge-tts: 1.2.10
       nostr-tools: 2.23.3(typescript@6.0.2)
-      openai: 6.34.0(ws@8.20.0)(zod@4.3.6)
+      openai: 6.34.0(ws@8.20.0)(zod@4.4.3)
       opusscript: 0.1.1
       osc-progress: 0.3.0
       pdfjs-dist: 5.6.205
@@ -6539,7 +6540,7 @@ snapshots:
       uuid: 13.0.0
       ws: 8.20.0
       yaml: 2.8.3
-      zod: 4.3.6
+      zod: 4.4.3
     optionalDependencies:
       '@discordjs/opus': 0.10.0
       '@matrix-org/matrix-sdk-crypto-nodejs': 0.4.0
@@ -7286,10 +7287,10 @@ snapshots:
 
   yoctocolors@2.1.2: {}
 
-  zod-to-json-schema@3.25.2(zod@4.3.6):
+  zod-to-json-schema@3.25.2(zod@4.4.3):
     dependencies:
-      zod: 4.3.6
+      zod: 4.4.3
 
   zod@3.25.76: {}
 
-  zod@4.3.6: {}
+  zod@4.4.3: {}
