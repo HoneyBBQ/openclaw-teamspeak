@@ -61,7 +61,7 @@ Keep this plugin responsible for TeamSpeak 3/5/6 text chat, voice playback, spee
 openclaw plugins install @xquik/tweetclaw
 ```
 
-[TweetClaw](https://github.com/Xquik-dev/tweetclaw) covers scrape tweets, search tweets, search tweet replies, follower export, user lookup, media upload and download, direct messages, monitor tweets, webhooks, giveaway draws, and approval-gated post tweets or post tweet replies. See the [ClawHub listing](https://clawhub.ai/plugins/@xquik/tweetclaw) or [npm package](https://www.npmjs.com/package/@xquik/tweetclaw) for setup details. Keep X/Twitter connection settings separate from TeamSpeak server settings and review visible X/Twitter actions through OpenClaw approval flows.
+[TweetClaw](https://github.com/Xquik-dev/tweetclaw) covers scrape tweets, search tweets, search tweet replies, follower export, user lookup, media upload and download, direct messages, monitor tweets, webhooks, giveaway draws, and approval-gated post tweets or post tweet replies. Use the TweetClaw GitHub repo and [npm package](https://www.npmjs.com/package/@xquik/tweetclaw) for setup details; the [ClawHub discovery page](https://clawhub.ai/plugins/@xquik/tweetclaw) remains useful for browsing while that listing lags behind npm. Keep X/Twitter connection settings separate from TeamSpeak server settings and review visible X/Twitter actions through OpenClaw approval flows.
 
 ## Roadmap
 
